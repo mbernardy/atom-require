@@ -1,19 +1,14 @@
-var inherits = require('../lib/inherits'),
-    addRequire = require('../lib/add-require'),
-    projectPath = atom.project.getPath(),
+'use babel';
+const addRequire = require('../lib/add-require'),
+    projectPath = atom.project.getPaths(),
     loadDependencies = require('../lib/load-dependencies'),
     dependencyFactory = require('../models/dependency-factory');
 
-var RequireView = function () {
-    return RequireView.__super__.constructor.apply(this, arguments);
-};
+import { SelectListView } from 'atom-space-pen-views';
 
-inherits(RequireView, require('atom').SelectListView);
-
-RequireView.prototype.initialize = function () {
-
-    RequireView.__super__.initialize.apply(this, arguments);
-
+class RequireView extends SelectListView {
+  initialize(...args) {
+    super.initialize(...args);
     // Register action for the require command.
     atom.workspaceView.command('require:require', (function(_this) {
 
@@ -44,26 +39,33 @@ RequireView.prototype.initialize = function () {
     atom.workspaceView.append(this);
 
     return this.focusFilterEditor();
+  }
 
-};
-
-/**
- * Generate a view for a module.
- */
-RequireView.prototype.viewForItem = function (pkg) {
+  /**
+   * Generate a view for a module.
+   */
+  viewForItem(pkg) {
     var icon = pkg.type === dependencyFactory.PROJECT ? 'icon-file-text' : 'icon-file-submodule',
         check = pkg.isRequired ? '<span class="status-renamed"> ✓ </span>' : '';
     return '<li><div class="pull-right secondary-line">' + pkg.version + '</div><div class="primary-line icon ' + icon + '">' + check + pkg.dispName + '</div></li>';
-};
+  }
 
-/**
- * Hook for when the SelectListView registers the user having selected an option
- */
-RequireView.prototype.confirmed = function (pkg) {
-    addRequire(pkg);
-    this.cancel();
-};
+  /**
+   * Hook for when the SelectListView registers the user having selected an option
+   */
+  confirmed(pkg) {
+      addRequire(pkg);
+      this.cancel();
+  };
 
-RequireView.prototype.getFilterKey = function () { return 'module'; };
+  getFilterKey() {
+    return 'module';
+  }
+
+}
+
+
+
+
 
 module.exports = RequireView;

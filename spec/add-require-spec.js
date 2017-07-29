@@ -12,7 +12,7 @@ describe('Add Require', function() {
         var directory, filePath, editor, buffer;
 
         directory = temp.mkdirSync();
-        atom.project.setPath(directory);
+        atom.project.setPaths([directory]);
         atom.workspaceView = new WorkspaceView();
         atom.workspace = atom.workspaceView.model;
         filePath = path.join(directory, 'add-require.txt');

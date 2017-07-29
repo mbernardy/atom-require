@@ -12,14 +12,18 @@
     "atom": ">0.50.0"
   },
   "dependencies": {
+    "atom-space-pen-views": "^2.2.0",
+    "path": "^0.4.9",
     "underscore": "^1.6.0",
-    "walk": "^2.3.1",
-    "path": "^0.4.9"
+    "walk": "^2.3.1"
   },
   "devDependencies": {
     "chai": "^1.9.1",
     "fs-plus": "^2.0.4",
     "temp": "^0.7.0",
     "path": "^0.4.9"
+  },
+  "scripts": {
+    "test": "mocha ."
   }
 }
